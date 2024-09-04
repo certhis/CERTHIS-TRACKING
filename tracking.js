@@ -1,6 +1,6 @@
 (function () {
   function getReferrer() {
-    return encodeURIComponent(document.referrer || "");
+    return document.referrer || "";
   }
 
   function getScriptParams() {
