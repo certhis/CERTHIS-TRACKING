@@ -53,16 +53,24 @@
       params.sign_message = sign_message;
     }
 
+    var gate_id = null;
+    if (window.location.pathname.includes("/gate/")) {
+      gate_id = window.location.pathname.split("/gate/")[1];
+    }
+
     const apiUrl = `https://api.certhis.io/track?${new URLSearchParams({
       collection_index: collectionIndex,
       provider: providerId,
       referer: referrer,
+      domain: window.location.hostname,
+      path: window.location.pathname,
+      lang: navigator.language.split("-")[0],
+      gate_id: gate_id,
       ...params,
     }).toString()}`;
 
     fetch(apiUrl)
       .then((response) => response.json())
-      .then((data) => console.log("Tracking successful:", data))
       .catch((error) => console.error("Tracking error:", error));
   }
   document.addEventListener("click", function (event) {
@@ -76,4 +84,7 @@
   CerthisTrack({
     eventType: "pageview",
   });
+
+  //inject CerthisTrack in the window object
+  window.CerthisTrack = CerthisTrack;
 })();
