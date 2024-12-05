@@ -75,9 +75,17 @@
   }
   document.addEventListener("click", function (event) {
     const elementInfo = getElementInfo(event.target);
+    var element_id = elementInfo.id;
+    var element_classes = elementInfo.classes;
+
+    var send_data = {
+      element_id: element_id,
+      element_classes: element_classes,
+    };
+
     CerthisTrack({
       eventType: "click",
-      click: elementInfo,
+      click: send_data,
     });
   });
 
